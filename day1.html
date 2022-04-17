@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    function Upload() {
+        var fileUpload = document.getElementById("fileUpload");
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+
+        if (regex.test(fileUpload.value.toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var table = document.createElement("table");
+                    var rows = e.target.result.split("\n");
+                    for (var i = 0; i < rows.length; i++) {
+                        var cells = rows[i].split(",");
+                        if (cells.length > 1) {
+                            var row = table.insertRow(-1);
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                        }
+                    }
+                    var dvCSV = document.getElementById("dvCSV");
+                    dvCSV.innerHTML = "";
+                    dvCSV.appendChild(table);
+                }
+                reader.readAsText(fileUpload.files[0]);
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
+    }
+
+
+
+      $.each(exportArray, function (index, value) {
+csvData.push(x[index] + "," + y[index] + "," + d[index] + "," + z[index]  + ","+ a[index] + "," + e[index] + "," + b[index] + "," + c[index]);
+        });
+csvData.sort();
+
+         csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(output);
+
+      $(this)
+.attr({
+    'download': filename,
+    'href': csvData,
+    'target': '_blank'
+});
+
+
+</script>
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title">Find Medicine</h1>
+                <h2 class="heading"></h2>
+                <form id="form">
+                    <input class="form-control" id="user-input" placeholder="Enter the name of batch" actor actress… />
+                    <button id="button" class="btn btn-secondary">Search</button>
+                </form>
+                <table class="table" cellpadding="10">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">name</th>
+                            <th scope="col">Batch</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Deal</th>
+                            <th scope="col">Free</th>
+                            <th scope="col">MRP</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html> 
+<input type="file" id="fileUpload" />
+<input type="button" id="upload" value="Upload" onclick="Upload()" />
+<hr />
+<div id="dvCSV">
+</div>
